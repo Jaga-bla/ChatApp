@@ -13,6 +13,8 @@
     <form id="form">
         <input type="text" name="message"/>
     </form>
+    <div id = "messages">
+    </div>
     <script type = "text/javascript">
         function isOpen(ws) { return ws.readyState === ws.OPEN }
         let url = 'ws://'+window.location.host+'/ws/socket-server/'
@@ -22,6 +24,13 @@
         chatSocket.onmessage = function(e){
             let data = JSON.parse(e.data)
             console.log('Data:', data)
+
+            if(data.type === 'chat'){
+                let mesages = document.getElementById('messages')
+                messages.insertAdjacentHTML('beforeend', `<div>
+                                    <p>${data.message}</p>
+                                </div>`)
+            }
         }
 
         let form = document.getElementById('form')
